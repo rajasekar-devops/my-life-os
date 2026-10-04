@@ -1,0 +1,1181 @@
+# PROJECT STATUS
+
+### ✅ Completed
+- GitHub repository: `my-life-os`
+- `PROJECT_MASTER.md`
+- `ARCHITECTURE.md`
+- `FEATURES.md`
+- `DATABASE.md`
+
+### 🔄 Current task
+**Create `DEVOPS_ROADMAP.md`**
+
+### ⬜ Next
+- `DEVELOPMENT_LOG.md`
+- `TROUBLESHOOTING.md`
+- `DECISIONS.md`
+- Then local development environment setup
+
+---
+
+## STEP 1 — Create `DEVOPS_ROADMAP.md`
+
+This document is important because **MY LIFE OS is also your real DevOps learning project**.
+
+We will connect each technology to an actual project need instead of adding technologies just for your resume.
+
+Create:
+
+```text
+docs/DEVOPS_ROADMAP.md
+```
+
+Paste the complete Markdown below:
+
+```markdown
+# MY LIFE OS — DevOps Roadmap
+
+## 1. Purpose
+
+MY LIFE OS is not only a personal application.
+
+It is also a long-term DevOps learning and portfolio project.
+
+The goal is to learn DevOps by building, deploying, monitoring and securing a real application.
+
+The project should demonstrate practical understanding rather than simply listing technologies on a resume.
+
+---
+
+# 2. DevOps Philosophy
+
+The project will follow:
+
+```text
+BUILD
+  ↓
+UNDERSTAND
+  ↓
+TEST
+  ↓
+IMPROVE
+  ↓
+NEXT
+```
+
+Each technology should solve a real project problem.
+
+We should not add technology only because it is popular.
+
+---
+
+# 3. Starting Architecture
+
+Initial architecture:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+This will initially run locally.
+
+The first goal is to make the application work correctly before introducing advanced infrastructure.
+
+---
+
+# 4. DevOps Learning Roadmap
+
+The planned progression is:
+
+```text
+1. Development Environment
+        ↓
+2. Git
+        ↓
+3. GitHub
+        ↓
+4. Linux / Bash
+        ↓
+5. Application Testing
+        ↓
+6. Docker
+        ↓
+7. Docker Compose
+        ↓
+8. GitHub Actions
+        ↓
+9. AWS
+        ↓
+10. Terraform
+        ↓
+11. Kubernetes
+        ↓
+12. Prometheus
+        ↓
+13. Grafana
+        ↓
+14. Centralized Logging
+        ↓
+15. Security
+        ↓
+16. Production Deployment
+        ↓
+17. AI-assisted Operations
+```
+
+The exact order may change when the project requires it.
+
+---
+
+# 5. Phase 1 — Development Environment
+
+## Goal
+
+Prepare the laptop for application development.
+
+Planned tools:
+
+- VS Code
+- Git
+- GitHub
+- Flutter SDK
+- Dart
+- Python
+- FastAPI
+- PostgreSQL
+- Postman or equivalent API testing tool
+- Terminal / PowerShell
+
+## Learning
+
+Understand:
+
+- What an application is
+- What frontend means
+- What backend means
+- What a database does
+- How applications communicate
+- How to run applications locally
+
+---
+
+# 6. Phase 2 — Git
+
+## Goal
+
+Learn version control.
+
+Git allows us to track changes to the project.
+
+Example:
+
+```text
+Version 1
+   ↓
+Change code
+   ↓
+Version 2
+   ↓
+Something breaks
+   ↓
+Compare previous version
+```
+
+## Topics
+
+Learn:
+
+- git init
+- git status
+- git add
+- git commit
+- git log
+- git diff
+- git branch
+- git checkout / switch
+- git merge
+- git pull
+- git push
+- .gitignore
+
+## Project Usage
+
+Every meaningful project change should be committed.
+
+Example:
+
+```text
+feat: add expense API
+fix: correct expense validation
+docs: update database design
+```
+
+---
+
+# 7. Phase 3 — GitHub
+
+## Goal
+
+Use GitHub as the central source-code repository.
+
+Repository:
+
+```text
+my-life-os
+```
+
+GitHub will contain:
+
+- Source code
+- Documentation
+- Configuration templates
+- Tests
+- CI/CD workflows
+- Infrastructure code
+
+It must NOT contain:
+
+- Passwords
+- API keys
+- Database credentials
+- AWS credentials
+- Personal financial records
+- Private spreadsheet data
+- Other sensitive information
+
+---
+
+# 8. Phase 4 — Linux and Bash
+
+## Goal
+
+Build Linux skills required for DevOps work.
+
+Topics:
+
+- Filesystem
+- Permissions
+- Processes
+- Services
+- Networking
+- Logs
+- Environment variables
+- Shell commands
+- Bash scripting
+
+Important commands:
+
+```text
+pwd
+ls
+cd
+cp
+mv
+rm
+mkdir
+cat
+less
+grep
+find
+ps
+top
+df
+du
+free
+curl
+ss
+chmod
+chown
+```
+
+These skills will later help with:
+
+- Docker
+- AWS
+- Kubernetes
+- Server troubleshooting
+- Production support
+
+---
+
+# 9. Phase 5 — Testing
+
+## Goal
+
+Learn how to verify that the application actually works.
+
+Testing areas:
+
+### Backend
+
+Python testing tools such as:
+
+```text
+pytest
+```
+
+### Flutter
+
+Flutter unit/widget tests.
+
+### API
+
+API testing using:
+
+- Postman
+- curl
+
+### Database
+
+Verify:
+
+- Data insertion
+- Data retrieval
+- Relationships
+- Validation
+- Error handling
+
+Testing must happen before claiming a feature is complete.
+
+---
+
+# 10. Phase 6 — Docker
+
+## Goal
+
+Package the application into containers.
+
+Without Docker:
+
+```text
+Install Python
+Install PostgreSQL
+Install dependencies
+Configure environment
+Run application
+```
+
+With Docker:
+
+```text
+Application
+   ↓
+Container
+```
+
+A container provides a consistent environment for running the application.
+
+---
+
+# 11. Phase 7 — Docker Compose
+
+## Goal
+
+Run multiple services together.
+
+Initial target:
+
+```text
+Flutter / Web
+     ↓
+FastAPI Container
+     ↓
+PostgreSQL Container
+```
+
+Docker Compose will help run the backend and database together during development.
+
+Example concept:
+
+```text
+docker compose up
+```
+
+The exact configuration will be created when Docker is introduced.
+
+---
+
+# 12. Phase 8 — CI/CD
+
+## Technology
+
+GitHub Actions
+
+## Goal
+
+Automatically test the project when code changes.
+
+Initial pipeline:
+
+```text
+Developer
+   ↓
+git push
+   ↓
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Run tests
+   ↓
+Build
+   ↓
+Report result
+```
+
+Later:
+
+```text
+GitHub
+   ↓
+CI
+   ↓
+Build
+   ↓
+Deploy
+```
+
+---
+
+# 13. CI/CD Learning
+
+Topics:
+
+- YAML
+- Workflow files
+- Jobs
+- Steps
+- Runners
+- Secrets
+- Environment variables
+- Automated tests
+- Build pipelines
+- Deployment pipelines
+
+Project location:
+
+```text
+.github/workflows/
+```
+
+---
+
+# 14. Phase 9 — AWS
+
+## Goal
+
+Move the application from local development toward cloud deployment.
+
+AWS topics will be introduced gradually.
+
+Potential services:
+
+- IAM
+- VPC
+- EC2
+- RDS PostgreSQL
+- S3
+- CloudWatch
+- ECR
+- Load Balancer
+
+Not every service is required immediately.
+
+---
+
+# 15. AWS Learning Principle
+
+Do not learn AWS only through theory.
+
+Use MY LIFE OS to understand:
+
+```text
+Local Application
+       ↓
+Cloud Infrastructure
+       ↓
+Application Deployment
+       ↓
+Database
+       ↓
+Monitoring
+```
+
+The exact architecture will be decided when cloud deployment begins.
+
+---
+
+# 16. Phase 10 — Terraform
+
+## Goal
+
+Learn Infrastructure as Code.
+
+Instead of manually creating infrastructure:
+
+```text
+Click AWS Console
+Click settings
+Create resource
+Configure resource
+```
+
+Terraform allows infrastructure to be described as code.
+
+Concept:
+
+```text
+Terraform Code
+      ↓
+Terraform
+      ↓
+AWS Infrastructure
+```
+
+Topics:
+
+- Providers
+- Resources
+- Variables
+- Outputs
+- State
+- Modules
+- Plan
+- Apply
+- Destroy
+
+Terraform must never contain hardcoded secrets.
+
+---
+
+# 17. Phase 11 — Kubernetes
+
+## Goal
+
+Learn container orchestration.
+
+Kubernetes will NOT be introduced at the beginning.
+
+First learn:
+
+```text
+Application
+↓
+Docker
+↓
+Docker Compose
+↓
+Cloud
+```
+
+Then Kubernetes.
+
+Learning progression:
+
+```text
+Kind / Minikube
+      ↓
+Pods
+      ↓
+Deployments
+      ↓
+Services
+      ↓
+ConfigMaps
+      ↓
+Secrets
+      ↓
+Ingress
+      ↓
+Health Checks
+      ↓
+AWS EKS
+```
+
+---
+
+# 18. Kubernetes Learning Principle
+
+Kubernetes should solve a real problem.
+
+Do not move the application to Kubernetes simply because Kubernetes is on the DevOps roadmap.
+
+First understand:
+
+- Why containers are needed
+- Why multiple containers exist
+- Why orchestration is useful
+- What happens when a container fails
+- How traffic reaches an application
+- How configuration is managed
+
+---
+
+# 19. Phase 12 — Monitoring
+
+## Technology
+
+Prometheus
+
+## Goal
+
+Collect application and infrastructure metrics.
+
+Example metrics:
+
+- CPU usage
+- Memory usage
+- Request count
+- Request latency
+- Error count
+- Database metrics
+
+Concept:
+
+```text
+Application
+     ↓
+Metrics
+     ↓
+Prometheus
+```
+
+---
+
+# 20. Phase 13 — Grafana
+
+## Goal
+
+Visualize metrics.
+
+Concept:
+
+```text
+Application
+     ↓
+Prometheus
+     ↓
+Grafana
+     ↓
+Dashboard
+```
+
+Possible dashboards:
+
+- Application health
+- API requests
+- API latency
+- Error rate
+- Server resources
+- Database health
+
+---
+
+# 21. Phase 14 — Alerting
+
+Potential technology:
+
+```text
+Alertmanager
+```
+
+Concept:
+
+```text
+Metric
+   ↓
+Prometheus
+   ↓
+Alert Rule
+   ↓
+Alertmanager
+```
+
+Examples:
+
+- API unavailable
+- High error rate
+- High CPU
+- High memory
+- Database unavailable
+
+Alerting will be implemented only after monitoring is working.
+
+---
+
+# 22. Phase 15 — Centralized Logging
+
+## Goal
+
+Collect application and infrastructure logs in one place.
+
+Possible technologies:
+
+- OpenSearch / ELK
+- CloudWatch
+- Other suitable logging platforms
+
+Initial concept:
+
+```text
+Application
+    ↓
+Logs
+    ↓
+Centralized Logging
+    ↓
+Search / Analysis
+```
+
+Logging technology will be selected based on project requirements.
+
+---
+
+# 23. Phase 16 — Security
+
+Security will be introduced throughout the project rather than only at the end.
+
+Important areas:
+
+- Secrets management
+- Environment variables
+- Authentication
+- Authorization
+- HTTPS
+- IAM
+- Database security
+- Network security
+- Dependency scanning
+- Container scanning
+- GitHub secret protection
+- Least privilege
+
+Never commit secrets to GitHub.
+
+---
+
+# 24. Phase 17 — Production Deployment
+
+The long-term goal is to have a real deployment architecture.
+
+Potential architecture:
+
+```text
+User
+ ↓
+Flutter Application
+ ↓
+HTTPS
+ ↓
+AWS
+ ↓
+Kubernetes / EKS
+ ↓
+FastAPI
+ ↓
+PostgreSQL / RDS
+```
+
+Supporting services may include:
+
+```text
+GitHub Actions
+Terraform
+Prometheus
+Grafana
+Centralized Logging
+Security Tools
+```
+
+The final production architecture will be designed after the underlying technologies are understood.
+
+---
+
+# 25. DevOps Portfolio Skills
+
+Only claim a technology on the resume after actually using it.
+
+Example:
+
+```text
+Technology     Status
+
+Git            ⬜
+GitHub         ⬜
+Linux          ⬜
+Docker         ⬜
+Docker Compose ⬜
+GitHub Actions ⬜
+AWS            ⬜
+Terraform      ⬜
+Kubernetes     ⬜
+Prometheus     ⬜
+Grafana        ⬜
+Logging        ⬜
+Security       ⬜
+```
+
+Status will be updated as each technology is genuinely implemented and understood.
+
+---
+
+# 26. DevOps Skill Levels
+
+Each technology should progress through:
+
+```text
+Level 1 — Understand
+
+Know what it is and why it exists.
+
+Level 2 — Use
+
+Use it in MY LIFE OS.
+
+Level 3 — Troubleshoot
+
+Fix common failures.
+
+Level 4 — Explain
+
+Explain it clearly in an interview.
+
+Level 5 — Design
+
+Understand where and why it should be used in a real architecture.
+```
+
+A technology should not be considered mastered simply because code was copied from an AI tool.
+
+---
+
+# 27. AI-Assisted Development
+
+AI tools may be used during development.
+
+Tools may include:
+
+- ChatGPT
+- Codex
+- Gemini
+- Google AI Studio
+
+AI should assist learning and development.
+
+The user should understand:
+
+- What the code does
+- Why the code is needed
+- How to test it
+- How to troubleshoot it
+- What alternatives exist
+
+Do not blindly copy AI-generated code.
+
+---
+
+# 28. Project Management
+
+Every major technology introduction should follow:
+
+```text
+Problem
+   ↓
+Why this technology?
+   ↓
+Learn basics
+   ↓
+Implement
+   ↓
+Test
+   ↓
+Troubleshoot
+   ↓
+Document
+   ↓
+Use in portfolio
+```
+
+---
+
+# 29. Documentation
+
+DevOps learning should be documented.
+
+Important documentation:
+
+```text
+docs/
+├── PROJECT_MASTER.md
+├── ARCHITECTURE.md
+├── FEATURES.md
+├── DATABASE.md
+├── DEVOPS_ROADMAP.md
+├── DEVELOPMENT_LOG.md
+├── TROUBLESHOOTING.md
+└── DECISIONS.md
+```
+
+Documentation should explain both:
+
+- What was built
+- What was learned
+
+---
+
+# 30. Final DevOps Architecture
+
+The long-term target may look like:
+
+```text
+                    Users
+                      │
+              ┌───────┴───────┐
+              │               │
+          Android          Laptop/Web
+          Flutter            Flutter
+              │               │
+              └───────┬───────┘
+                      │
+                    HTTPS
+                      │
+                 AWS Cloud
+                      │
+                Load Balancer
+                      │
+                 Kubernetes
+                    /     \
+             FastAPI      Workers
+                │
+             PostgreSQL
+                │
+              RDS
+```
+
+Supporting infrastructure:
+
+```text
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Build / Test
+   ↓
+Container Registry
+   ↓
+Deployment
+```
+
+Infrastructure:
+
+```text
+Terraform
+   ↓
+AWS Infrastructure
+```
+
+Observability:
+
+```text
+Application
+   ├── Metrics → Prometheus → Grafana
+   └── Logs → Centralized Logging
+```
+
+Security:
+
+```text
+IAM
+Secrets
+HTTPS
+Network Controls
+Scanning
+Least Privilege
+```
+
+This is a long-term target, not the starting architecture.
+
+---
+
+# 31. What We Will NOT Do Initially
+
+The initial project will NOT start with:
+
+- Kubernetes
+- AWS
+- Terraform
+- Complex CI/CD
+- Microservices
+- Offline synchronization
+- Complex AI
+- Distributed databases
+- Advanced observability
+- Complex security infrastructure
+
+First priority:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+Then Expense Tracker.
+
+---
+
+# 32. Current DevOps Status
+
+Development environment:
+
+⬜ Not started
+
+Git:
+
+🟡 Repository created
+
+GitHub:
+
+🟢 Repository created
+
+Flutter:
+
+⬜ Not started
+
+FastAPI:
+
+⬜ Not started
+
+PostgreSQL:
+
+⬜ Not started
+
+Docker:
+
+⬜ Not started
+
+GitHub Actions:
+
+⬜ Not started
+
+AWS:
+
+⬜ Not started
+
+Terraform:
+
+⬜ Not started
+
+Kubernetes:
+
+⬜ Not started
+
+Prometheus:
+
+⬜ Not started
+
+Grafana:
+
+⬜ Not started
+
+Logging:
+
+⬜ Not started
+
+Security:
+
+⬜ Not started
+
+AI:
+
+⬜ Deferred to later phase
+
+---
+
+# 33. Current Priority
+
+The immediate priority is NOT DevOps infrastructure.
+
+The immediate priority is:
+
+```text
+Development Environment
+        ↓
+Flutter
+        ↓
+FastAPI
+        ↓
+PostgreSQL
+        ↓
+Connect Everything
+        ↓
+Expense Tracker
+```
+
+Only after the application works should advanced DevOps technologies be introduced.
+
+---
+
+# 34. Career Objective
+
+MY LIFE OS should eventually demonstrate practical experience with:
+
+- Linux
+- Git
+- GitHub
+- Flutter
+- Python
+- FastAPI
+- PostgreSQL
+- Docker
+- CI/CD
+- AWS
+- Terraform
+- Kubernetes
+- Monitoring
+- Logging
+- Security
+
+The objective is to understand how these technologies work together in a real application.
+
+---
+
+# 35. Final Principle
+
+The goal is not:
+
+"Use every DevOps technology."
+
+The goal is:
+
+"Build a real application and progressively learn how to develop, test, deploy, operate, monitor and secure it."
+
+The project should become both:
+
+1. A useful personal Life OS
+2. A genuine DevOps portfolio project
+```
+
+### Your one action
+
+Paste it into:
+
+```text
+docs/DEVOPS_ROADMAP.md
+```
+
+Commit with:
+
+```text
+docs: add devops roadmap
+```
+
+Then tell me only:
+
+**`DEVOPS_ROADMAP committed`**

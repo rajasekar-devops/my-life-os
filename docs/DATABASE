@@ -1,0 +1,915 @@
+# PROJECT STATUS
+
+### ✅ Completed
+- GitHub repository: `my-life-os`
+- `PROJECT_MASTER.md`
+- `ARCHITECTURE.md`
+- `FEATURES.md`
+
+### 🔄 Current task
+**Create `DATABASE.md`**
+
+### ⬜ Next
+- `DEVOPS_ROADMAP.md`
+- `DEVELOPMENT_LOG.md`
+- `TROUBLESHOOTING.md`
+- `DECISIONS.md`
+- Then local development environment setup
+
+---
+
+## STEP 1 — Create `DATABASE.md`
+
+This document will define **how Life OS stores data**.
+
+We will keep it simple initially:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+We will **not create the actual database yet**. First we document the design so we don't randomly create tables later.
+
+### In GitHub
+
+Open:
+
+```text
+docs/
+```
+
+Create:
+
+```text
+DATABASE.md
+```
+
+Then paste this **entire block**:
+
+```markdown
+# MY LIFE OS — Database Design
+
+## 1. Purpose
+
+This document defines the database strategy and planned data structure for MY LIFE OS.
+
+The database will store the user's personal Life OS information in PostgreSQL.
+
+Initial architecture:
+
+Flutter
+↓
+FastAPI
+↓
+PostgreSQL
+
+The Flutter application will not directly access PostgreSQL.
+
+FastAPI will act as the middle layer between the application and the database.
+
+---
+
+# 2. Database Technology
+
+## Primary Database
+
+PostgreSQL
+
+PostgreSQL will be used because it is:
+
+- Reliable
+- Open source
+- Widely used in production
+- Suitable for structured financial and personal data
+- Supported by Python and FastAPI
+- Suitable for future AWS deployment
+- Suitable for DevOps portfolio development
+
+---
+
+# 3. Database Responsibility
+
+### Flutter
+
+Responsible for:
+
+- Displaying data
+- Collecting user input
+- Sending requests to the backend
+- Showing results
+
+Flutter must NOT directly connect to PostgreSQL.
+
+### FastAPI
+
+Responsible for:
+
+- Receiving requests from Flutter
+- Validating input
+- Applying application rules
+- Reading and writing database records
+- Returning responses to Flutter
+
+### PostgreSQL
+
+Responsible for:
+
+- Permanently storing application data
+- Maintaining relationships between records
+- Enforcing data integrity
+- Supporting queries and reports
+
+---
+
+# 4. Initial Database Domains
+
+The database will eventually contain data for these major areas:
+
+1. Expenses
+2. Income
+3. Budgets
+4. Accounts
+5. Loans
+6. Investments
+7. Planner
+8. Habits
+9. Goals
+10. Fitness
+11. Food
+12. Career
+13. Learning
+14. Interview Preparation
+15. Job Applications
+16. Notes
+17. Life Log
+18. Spiritual Goals
+19. Daily Reflection
+20. Monthly Review
+21. Notifications
+22. User Settings
+
+These domains will be implemented gradually.
+
+We will NOT create every table at the beginning.
+
+---
+
+# 5. Initial MVP Database
+
+The first application feature is the Expense Tracker.
+
+Therefore the first database version should contain only the tables required for the initial Expense Tracker.
+
+Initial planned tables:
+
+- users
+- expense_categories
+- expenses
+
+Additional tables will be introduced only when the related feature is built.
+
+---
+
+# 6. Users Table
+
+The `users` table will represent application users.
+
+Planned fields:
+
+- id
+- name
+- email
+- created_at
+- updated_at
+
+Example concept:
+
+```text
+users
+------
+id
+name
+email
+created_at
+updated_at
+```
+
+Authentication will be implemented later.
+
+Do not store passwords as plain text.
+
+---
+
+# 7. Expense Categories
+
+Expense categories will help organize expenses.
+
+Example categories:
+
+- Food
+- Transport
+- Rent
+- Electricity
+- Internet
+- Mobile
+- Shopping
+- Medical
+- Education
+- Entertainment
+- Family
+- Other
+
+Planned fields:
+
+```text
+expense_categories
+------------------
+id
+name
+description
+created_at
+```
+
+Categories should be reusable instead of storing the category name repeatedly inside every expense record.
+
+---
+
+# 8. Expenses Table
+
+The `expenses` table will store individual expense records.
+
+Initial planned fields:
+
+```text
+expenses
+--------
+id
+user_id
+category_id
+amount
+expense_date
+description
+payment_method
+notes
+created_at
+updated_at
+```
+
+Example:
+
+```text
+Date: 2026-10-04
+Category: Food
+Amount: ₹150
+Description: Lunch
+Payment Method: UPI
+```
+
+The actual database column types will be finalized during implementation.
+
+---
+
+# 9. Money Storage Rule
+
+Financial amounts must be stored carefully.
+
+Do not use floating-point numbers for financial calculations when avoidable.
+
+PostgreSQL `NUMERIC` / `DECIMAL` should be considered for monetary values.
+
+Example:
+
+```text
+amount NUMERIC(12,2)
+```
+
+This allows values such as:
+
+```text
+150.00
+1250.50
+100000.00
+```
+
+Financial calculations must avoid unexpected floating-point rounding problems.
+
+---
+
+# 10. Date and Time
+
+Records such as expenses, workouts, habits and notes will contain dates or timestamps where appropriate.
+
+The application should distinguish between:
+
+- Date-only information
+- Date and time information
+
+Example:
+
+Expense:
+
+```text
+2026-10-04
+```
+
+Created timestamp:
+
+```text
+2026-10-04 10:30:00
+```
+
+The final timezone strategy will be documented before production deployment.
+
+---
+
+# 11. Relationships
+
+Tables will be connected using IDs.
+
+Example:
+
+```text
+users
+  |
+  └── expenses
+         |
+         └── expense_categories
+```
+
+An expense belongs to a user.
+
+An expense also belongs to an expense category.
+
+Example:
+
+```text
+User
+  ↓
+Expense
+  ↓
+Food Category
+```
+
+This prevents unnecessary duplication of information.
+
+---
+
+# 12. Foreign Keys
+
+Relationships between tables should use PostgreSQL foreign keys.
+
+Example concept:
+
+```text
+expenses.user_id
+        ↓
+users.id
+```
+
+and:
+
+```text
+expenses.category_id
+        ↓
+expense_categories.id
+```
+
+Foreign keys help prevent invalid relationships.
+
+---
+
+# 13. IDs
+
+Database records will use unique IDs.
+
+The exact ID strategy will be selected during implementation.
+
+Possible options include:
+
+- Integer identity IDs
+- UUIDs
+
+The decision will consider:
+
+- Simplicity for a beginner
+- PostgreSQL support
+- API design
+- Future cloud deployment
+- Security considerations
+
+No unnecessary complexity will be introduced.
+
+---
+
+# 14. Database Naming Convention
+
+Use clear and consistent naming.
+
+Preferred style:
+
+```text
+snake_case
+```
+
+Examples:
+
+```text
+expense_categories
+expense_date
+payment_method
+created_at
+updated_at
+```
+
+Table names should normally use plural nouns.
+
+Examples:
+
+```text
+users
+expenses
+loans
+investments
+habits
+goals
+```
+
+---
+
+# 15. Data Integrity
+
+The database should protect data from invalid states.
+
+Examples:
+
+- Expense amount should not normally be negative.
+- Required fields should not be empty.
+- Foreign keys should reference valid records.
+- Financial values should use appropriate numeric types.
+- Important records should not be accidentally deleted.
+
+Database constraints will be introduced when the relevant tables are implemented.
+
+---
+
+# 16. Historical Financial Data
+
+The user already has historical financial information stored in an existing Google Sheet / Excel workbook.
+
+This data may contain:
+
+- Expenses
+- Investments
+- Loans
+- Other financial records
+
+The existing file is considered important historical data.
+
+## Critical Rule
+
+NEVER:
+
+- Delete existing financial data
+- Overwrite existing financial data
+- Restructure the original workbook
+- Modify historical values
+- Assume column meanings without verification
+
+without explicit user permission.
+
+---
+
+# 17. Historical Data Import Strategy
+
+Preferred process:
+
+```text
+Existing Excel / Google Sheet
+             ↓
+       Data Inspection
+             ↓
+      Data Mapping
+             ↓
+       Validation
+             ↓
+       Import Script
+             ↓
+        PostgreSQL
+             ↓
+        Life OS App
+```
+
+The original spreadsheet should remain unchanged.
+
+The imported PostgreSQL records should be validated against the source data.
+
+---
+
+# 18. Import Safety
+
+Historical data import must be treated as a separate project step.
+
+Before importing:
+
+1. Inspect the original workbook.
+2. Understand every relevant sheet.
+3. Identify columns.
+4. Identify duplicate records.
+5. Identify missing values.
+6. Decide how dates are represented.
+7. Decide how amounts are represented.
+8. Map spreadsheet columns to database fields.
+9. Test the import using a small sample.
+10. Verify imported records.
+11. Only then perform the complete import.
+
+No destructive migration should be performed without explicit approval.
+
+---
+
+# 19. Future Finance Tables
+
+When finance modules are developed, additional tables may include:
+
+```text
+income
+budgets
+accounts
+loans
+loan_payments
+investments
+investment_transactions
+savings_goals
+```
+
+These tables will be designed when their corresponding features are actually implemented.
+
+---
+
+# 20. Planner and Habit Tables
+
+Future planner-related tables may include:
+
+```text
+tasks
+habits
+habit_logs
+daily_plans
+```
+
+These will support:
+
+- Daily tasks
+- Habit tracking
+- Completion status
+- Daily planning
+- Recurring activities
+
+The exact structure will be designed during implementation.
+
+---
+
+# 21. Fitness Tables
+
+Future fitness-related tables may include:
+
+```text
+weight_records
+workouts
+workout_exercises
+food_entries
+```
+
+Possible information:
+
+- Weight
+- Workout date
+- Exercise
+- Sets
+- Repetitions
+- Duration
+- Food
+- Calories
+- Protein
+
+The actual schema will be created only when the Fitness feature is developed.
+
+---
+
+# 22. Career Tables
+
+Future career-related tables may include:
+
+```text
+skills
+learning_topics
+learning_progress
+interview_questions
+job_applications
+```
+
+These will support the user's career development and job search.
+
+---
+
+# 23. Notes and Life Log
+
+Future tables may include:
+
+```text
+notes
+life_logs
+daily_reflections
+monthly_reviews
+```
+
+These will store personal notes and reflection records.
+
+Sensitive personal information must be handled carefully.
+
+---
+
+# 24. Authentication
+
+Authentication will be implemented later.
+
+Possible future architecture:
+
+```text
+Flutter
+   ↓
+Login
+   ↓
+FastAPI
+   ↓
+Authentication
+   ↓
+PostgreSQL
+```
+
+Passwords must never be stored as plain text.
+
+Authentication secrets and credentials must never be committed to GitHub.
+
+---
+
+# 25. Database Credentials
+
+Database credentials must never be hardcoded in source code.
+
+Bad:
+
+```text
+password = "mypassword123"
+```
+
+Correct approach:
+
+```text
+Environment variables
+        ↓
+FastAPI
+        ↓
+Database connection
+```
+
+Example environment variables may eventually include:
+
+```text
+DATABASE_HOST
+DATABASE_PORT
+DATABASE_NAME
+DATABASE_USER
+DATABASE_PASSWORD
+```
+
+Actual secret values must never be committed to GitHub.
+
+---
+
+# 26. Local Development
+
+During the initial development stage:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+All three components will initially run on the developer's computer.
+
+Later Docker Compose will be introduced to simplify running the services together.
+
+---
+
+# 27. Database Migrations
+
+Database structure will change as the application grows.
+
+A migration system will eventually be used so that database changes can be tracked safely.
+
+The migration process will be introduced when the FastAPI/PostgreSQL implementation begins.
+
+We should not manually modify production database structures.
+
+---
+
+# 28. Backup Strategy
+
+The database will eventually require:
+
+- Regular backups
+- Backup verification
+- Restore testing
+- Disaster recovery planning
+
+For local development, backups are not the first priority.
+
+Before production deployment, backup and recovery must become mandatory.
+
+---
+
+# 29. Security Principles
+
+Database security principles:
+
+- Never commit credentials.
+- Never expose PostgreSQL directly to the public internet unnecessarily.
+- Use strong credentials.
+- Use environment variables or secret management.
+- Apply least-privilege access.
+- Validate application input.
+- Keep production database access restricted.
+- Encrypt sensitive communication in production.
+- Test backup restoration.
+
+---
+
+# 30. Performance
+
+The first version should prioritize correctness and simplicity.
+
+Do not add unnecessary:
+
+- Caching
+- Database replicas
+- Sharding
+- Complex indexing
+- Microservices
+- Distributed databases
+
+These are not required for the initial personal application.
+
+Indexes will be added when actual query patterns require them.
+
+---
+
+# 31. Database Testing
+
+Database-related changes should be tested.
+
+Examples:
+
+- Create an expense.
+- Read an expense.
+- Update an expense.
+- Delete an expense where deletion is allowed.
+- Verify category relationships.
+- Verify invalid data is rejected.
+- Verify financial amounts are stored correctly.
+- Verify imported historical data.
+
+Testing must happen before declaring the feature complete.
+
+---
+
+# 32. Development Philosophy
+
+The database should evolve with the application.
+
+We will follow:
+
+```text
+Build
+  ↓
+Understand
+  ↓
+Test
+  ↓
+Improve
+  ↓
+Next Feature
+```
+
+Do not design hundreds of tables before they are needed.
+
+Do not over-engineer the database.
+
+Build only what the current feature requires.
+
+---
+
+# 33. Initial Database Scope
+
+The first database milestone is intentionally small.
+
+Initial target:
+
+```text
+PostgreSQL
+   ↓
+users
+expense_categories
+expenses
+```
+
+Then:
+
+```text
+FastAPI
+   ↓
+Expense API
+   ↓
+PostgreSQL
+```
+
+Then:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+After this is working and tested, additional finance modules will be developed.
+
+---
+
+# 34. Current Status
+
+Database documentation:
+
+🟡 Designing
+
+Database implementation:
+
+⬜ Not started
+
+PostgreSQL installation:
+
+⬜ Not started
+
+FastAPI database connection:
+
+⬜ Not started
+
+Expense tables:
+
+⬜ Not started
+
+Historical financial data import:
+
+⬜ Not started
+
+---
+
+# 35. Important Rule
+
+MY LIFE OS is a long-term personal project.
+
+Database design decisions must prioritize:
+
+1. Data safety
+2. Simplicity
+3. Understandability
+4. Maintainability
+5. Correctness
+6. Future scalability
+
+Do not sacrifice simplicity just to use advanced technology.
+
+Advanced database architecture should only be introduced when the project actually needs it.
+```
+
+### Your one action now
+
+**Paste it into `docs/DATABASE.md` and commit it with:**
+
+```text
+docs: add database design
+```
+
+Then tell me:
+
+**`DATABASE committed`**
+
+I will give you only the next step after that.
