@@ -1,0 +1,1193 @@
+# PROJECT STATUS
+
+### ✅ Completed
+- `PROJECT_MASTER.md`
+- `ARCHITECTURE.md`
+- `FEATURES.md`
+- `DATABASE.md`
+- `DEVOPS_ROADMAP.md`
+- `DEVELOPMENT_LOG.md`
+- `TROUBLESHOOTING.md`
+
+### 🔄 Current task
+**Create `DECISIONS.md`**
+
+This is the **final documentation foundation file**.
+
+Create:
+
+```text
+docs/DECISIONS.md
+```
+
+Paste this:
+
+```markdown
+# MY LIFE OS — Architecture & Technical Decisions
+
+## 1. Purpose
+
+This document records important technical and architectural decisions made during the development of MY LIFE OS.
+
+The purpose is to remember:
+
+- What decision was made
+- Why it was made
+- What alternatives were considered
+- What trade-offs exist
+- When the decision may need to be reviewed
+
+This prevents the project architecture from changing randomly over time.
+
+---
+
+# 2. Decision Format
+
+Important decisions should use this format:
+
+```text
+## ADR-XXX — Decision Title
+
+Date:
+
+Status:
+
+Decision:
+
+Why:
+
+Alternatives Considered:
+
+Trade-offs:
+
+Review When:
+```
+
+ADR means:
+
+**Architecture Decision Record**
+
+It is simply a written record explaining an important technical decision.
+
+---
+
+# 3. ADR-001 — Use Flutter for the Frontend
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Use Flutter and Dart for the MY LIFE OS frontend.
+
+## Why
+
+The application should work on:
+
+- Android
+- Laptop/Web
+
+Flutter allows the project to share much of the application code across platforms.
+
+The mobile application is especially important because daily entries should be fast.
+
+Examples:
+
+```text
++ Expense
++ Food
++ Workout
++ Habit
++ Note
++ Task
+```
+
+## Alternatives Considered
+
+### Native Android
+
+Advantages:
+
+- Excellent Android integration
+
+Disadvantages:
+
+- Would primarily target Android
+- Separate technology would be required for web/laptop
+
+### React / React Native
+
+Advantages:
+
+- Large ecosystem
+- Strong web development adoption
+
+Disadvantages:
+
+- Would introduce a different technology direction from the selected project plan
+
+## Trade-offs
+
+Flutter introduces Dart as an additional language.
+
+However, the ability to target multiple platforms from one frontend technology makes it suitable for this project.
+
+## Review When
+
+Review if the application later requires platform capabilities that Flutter cannot reasonably support.
+
+---
+
+# 4. ADR-002 — Use FastAPI for the Backend
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Use Python with FastAPI for the backend API.
+
+## Why
+
+The user wants to learn Python and use it in a real application.
+
+FastAPI provides a simple way to build APIs using Python.
+
+The backend will sit between Flutter and PostgreSQL.
+
+Architecture:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+## Alternatives Considered
+
+### Node.js
+
+Advantages:
+
+- Large ecosystem
+- Popular backend technology
+
+Disadvantages:
+
+- Would introduce JavaScript/TypeScript as another primary backend direction
+
+### Django
+
+Advantages:
+
+- Mature Python framework
+- Many built-in features
+
+Disadvantages:
+
+- More framework functionality than required for the initial API
+
+## Trade-offs
+
+FastAPI requires learning Python backend development and API concepts.
+
+This is considered beneficial because Python is also useful for automation, DevOps and future AI functionality.
+
+## Review When
+
+Review if the application develops requirements that FastAPI cannot reasonably satisfy.
+
+---
+
+# 5. ADR-003 — Use PostgreSQL
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Use PostgreSQL as the primary application database.
+
+## Why
+
+MY LIFE OS contains structured data such as:
+
+- Expenses
+- Income
+- Loans
+- Investments
+- Habits
+- Tasks
+- Goals
+- Workouts
+- Job applications
+
+These records have relationships with each other.
+
+PostgreSQL is well suited for structured relational data.
+
+It is also widely used in production environments and is suitable for future AWS deployment.
+
+## Alternatives Considered
+
+### MySQL
+
+A capable relational database, but PostgreSQL aligns better with the selected learning path.
+
+### MongoDB
+
+A document database, but the project's financial and relational data is better suited to a relational database.
+
+### SQLite
+
+Very simple and useful for local applications, but PostgreSQL provides a better long-term database direction for this project.
+
+## Trade-offs
+
+PostgreSQL requires more setup than SQLite.
+
+The additional complexity is acceptable because learning PostgreSQL is part of the project's development and DevOps goals.
+
+## Review When
+
+Review only if the application's data requirements fundamentally change.
+
+---
+
+# 6. ADR-004 — Use a Three-Layer Architecture
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Use:
+
+```text
+Frontend
+   ↓
+Backend API
+   ↓
+Database
+```
+
+Specifically:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+## Why
+
+The frontend should not directly access the database.
+
+FastAPI provides:
+
+- Validation
+- Business logic
+- Authentication later
+- API endpoints
+- Database access control
+
+This creates a clean separation between the user interface and stored data.
+
+## Trade-offs
+
+There are more components than a simple single application.
+
+However, this structure provides a better foundation for future mobile, web and cloud deployment.
+
+---
+
+# 7. ADR-005 — Start Locally
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Start development locally before deploying to AWS or Kubernetes.
+
+## Why
+
+The first goal is to understand and build the application.
+
+Initial environment:
+
+```text
+Laptop
+ ├── Flutter
+ ├── FastAPI
+ └── PostgreSQL
+```
+
+Starting locally allows problems to be understood before adding cloud infrastructure.
+
+## Alternatives Considered
+
+Start directly with:
+
+- AWS
+- Docker
+- Kubernetes
+
+## Why They Were Rejected Initially
+
+These technologies introduce additional complexity before the basic application exists.
+
+The project should first prove:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+works correctly.
+
+---
+
+# 8. ADR-006 — Build Expense Tracker First
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+The Expense Tracker will be the first major application feature.
+
+## Why
+
+Expense tracking is:
+
+- Personally useful
+- Simple enough for an initial feature
+- A good way to learn CRUD operations
+- A good way to learn database relationships
+- Suitable for mobile quick entry
+- Useful for later financial dashboards
+
+## Initial flow
+
+```text
+User
+ ↓
+Add Expense
+ ↓
+Flutter
+ ↓
+FastAPI
+ ↓
+PostgreSQL
+```
+
+## Trade-offs
+
+Other Life OS modules will be delayed.
+
+This is intentional.
+
+The project should build depth before breadth.
+
+---
+
+# 9. ADR-007 — Protect Existing Financial Data
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+The existing financial spreadsheet will be treated as historical source data.
+
+It must not be modified without explicit permission.
+
+## Why
+
+The spreadsheet contains historical financial information.
+
+Potentially important records include:
+
+- Expenses
+- Investments
+- Loans
+
+Data loss or accidental restructuring would be difficult to recover.
+
+## Preferred Process
+
+```text
+Existing Spreadsheet
+        ↓
+Inspection
+        ↓
+Mapping
+        ↓
+Validation
+        ↓
+Test Import
+        ↓
+PostgreSQL
+```
+
+The original file remains unchanged.
+
+---
+
+# 10. ADR-008 — Keep Personal Financial Data Out of GitHub
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+The public GitHub repository must not contain real personal financial data.
+
+## Never commit
+
+- Expense history
+- Investment records
+- Loan records
+- Bank information
+- Account numbers
+- Personal documents
+- Passwords
+- API keys
+- Database credentials
+- AWS credentials
+
+## Why
+
+The GitHub repository is intended to become a public DevOps portfolio project.
+
+Public source code and private personal data must remain separate.
+
+## Approach
+
+The repository may contain:
+
+- Example data
+- Fake/sample records
+- Database schema
+- Import templates
+- Documentation
+- Source code
+
+Actual personal data remains outside the public repository.
+
+---
+
+# 11. ADR-009 — Do Not Hardcode Secrets
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Credentials and secrets must never be hardcoded into source code.
+
+Examples:
+
+```text
+DATABASE_PASSWORD
+API_KEYS
+AWS_ACCESS_KEYS
+OAUTH_SECRETS
+```
+
+must be handled through environment variables or appropriate secret-management systems.
+
+## Why
+
+Hardcoded secrets can accidentally be committed to GitHub and exposed.
+
+## Development Direction
+
+Local:
+
+```text
+Environment Variables
+```
+
+Later:
+
+```text
+Cloud Secret Management
+```
+
+---
+
+# 12. ADR-010 — Do Not Start With Microservices
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Start with a simple backend application rather than multiple microservices.
+
+## Initial architecture
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+## Why
+
+MY LIFE OS is initially a personal application.
+
+Microservices would add unnecessary complexity.
+
+## Avoid Initially
+
+- Multiple backend services
+- Service mesh
+- Distributed transactions
+- Message brokers
+- Complex service discovery
+
+## Review When
+
+Only consider service separation if the application develops a real need for it.
+
+---
+
+# 13. ADR-011 — Kubernetes Comes Later
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Kubernetes will not be part of the initial development architecture.
+
+## Why
+
+Kubernetes is useful for orchestrating containers at larger scale, but the project does not need that complexity initially.
+
+Learning progression:
+
+```text
+Local Application
+      ↓
+Docker
+      ↓
+Docker Compose
+      ↓
+Cloud
+      ↓
+Kubernetes
+```
+
+## Goal
+
+Learn Kubernetes because it is useful for the DevOps career path, not simply because it is popular.
+
+---
+
+# 14. ADR-012 — Use Docker After Local Application Works
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Docker will be introduced after the basic application works locally.
+
+## Why
+
+The user should first understand:
+
+- Flutter
+- FastAPI
+- PostgreSQL
+- API communication
+- Database communication
+
+Then Docker can solve the next problem:
+
+```text
+How can the application environment be packaged consistently?
+```
+
+## Trade-off
+
+Docker is delayed.
+
+This makes early learning simpler.
+
+---
+
+# 15. ADR-013 — DevOps Technologies Must Solve Real Problems
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Do not add technologies only to make the project look impressive.
+
+Each technology must have a reason.
+
+Example:
+
+```text
+Problem
+   ↓
+Technology
+   ↓
+Implementation
+   ↓
+Testing
+   ↓
+Learning
+```
+
+## Example
+
+Docker should be introduced when containerizing the application becomes useful.
+
+Kubernetes should be introduced when orchestration becomes useful.
+
+Prometheus should be introduced when monitoring becomes useful.
+
+Terraform should be introduced when infrastructure needs to be managed as code.
+
+---
+
+# 16. ADR-014 — Build One Major Feature at a Time
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+The project will not attempt to build every Life OS module simultaneously.
+
+## Development order
+
+```text
+Foundation
+   ↓
+Expense Tracker
+   ↓
+Finance
+   ↓
+Planner
+   ↓
+Habits
+   ↓
+Goals
+   ↓
+Fitness
+   ↓
+Food
+   ↓
+Career
+   ↓
+Interview
+   ↓
+Jobs
+   ↓
+Notes
+   ↓
+Reviews
+   ↓
+Analytics
+```
+
+## Why
+
+Building everything at once would make debugging and learning difficult.
+
+---
+
+# 17. ADR-015 — Mobile and Laptop Have Different UX Priorities
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+The same backend and database will support both mobile and laptop interfaces.
+
+However, the user experience will be optimized differently.
+
+## Mobile
+
+Focus on:
+
+- Fast entry
+- Quick actions
+- Simple forms
+- Daily usage
+
+Example:
+
+```text
++ Expense
++ Food
++ Workout
++ Habit
++ Note
++ Task
+```
+
+## Laptop
+
+Focus on:
+
+- Dashboards
+- Charts
+- Reports
+- Detailed editing
+- Analysis
+
+---
+
+# 18. ADR-016 — No Offline Sync Initially
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Offline synchronization will not be implemented in the first version.
+
+## Why
+
+Offline synchronization introduces additional complexity:
+
+- Local storage
+- Conflict resolution
+- Sync queues
+- Data reconciliation
+
+The initial application will focus on reliable online operation.
+
+## Review When
+
+Consider offline functionality after the core application is stable.
+
+---
+
+# 19. ADR-017 — AI Comes Later
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+AI-powered personal analysis will be implemented only after the core application is stable.
+
+## Why
+
+AI is not the foundation of the Life OS.
+
+The application first needs reliable data.
+
+```text
+Reliable Data
+     ↓
+Useful Database
+     ↓
+Analytics
+     ↓
+AI Analysis
+```
+
+## Future AI Examples
+
+Potential future capabilities:
+
+- Spending analysis
+- Habit analysis
+- Fitness trends
+- Goal progress
+- Career progress
+- Monthly life review
+- Personalized suggestions
+
+---
+
+# 20. ADR-018 — Testing Before Claiming Completion
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+A feature cannot be considered complete simply because code exists.
+
+The feature must be tested.
+
+## Minimum process
+
+```text
+Implement
+   ↓
+Run
+   ↓
+Test
+   ↓
+Verify
+   ↓
+Document
+   ↓
+Commit
+```
+
+The project status should reflect the actual verified state.
+
+---
+
+# 21. ADR-019 — AI-Generated Code Must Be Understood
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+AI tools can assist development, but generated code must be understood before being accepted.
+
+Possible tools:
+
+- ChatGPT
+- Codex
+- Gemini
+- Google AI Studio
+
+## Required Understanding
+
+Before accepting important code, understand:
+
+- What it does
+- Why it is needed
+- Where it belongs
+- How to run it
+- How to test it
+- What could go wrong
+
+AI assistance is a development tool, not a replacement for understanding.
+
+---
+
+# 22. ADR-020 — Documentation Is Part of Development
+
+Date:
+
+2026-10-04
+
+Status:
+
+Accepted
+
+## Decision
+
+Documentation is part of the project, not an optional activity.
+
+Important documents include:
+
+```text
+PROJECT_MASTER.md
+ARCHITECTURE.md
+FEATURES.md
+DATABASE.md
+DEVOPS_ROADMAP.md
+DEVELOPMENT_LOG.md
+TROUBLESHOOTING.md
+DECISIONS.md
+```
+
+## Why
+
+Good documentation helps:
+
+- Future development
+- Troubleshooting
+- Learning
+- Interview preparation
+- Portfolio presentation
+- Long-term maintenance
+
+---
+
+# 23. Technology Introduction Rule
+
+Every new technology should answer:
+
+```text
+1. What problem does it solve?
+2. Why do we need it now?
+3. What simpler option exists?
+4. What will I learn from using it?
+5. How will we test it?
+6. Where will it fit into MY LIFE OS?
+```
+
+If there is no good answer, the technology should probably wait.
+
+---
+
+# 24. Decision Review
+
+Architecture decisions are not permanent.
+
+A decision may be reviewed when:
+
+- Requirements change
+- The application grows
+- Performance becomes a problem
+- Security requirements change
+- Deployment requirements change
+- A simpler solution becomes available
+
+Changing a decision is acceptable when there is a clear reason.
+
+---
+
+# 25. Current Architecture Decision Summary
+
+```text
+Frontend
+    ↓
+Flutter / Dart
+
+Backend
+    ↓
+Python / FastAPI
+
+Database
+    ↓
+PostgreSQL
+
+Version Control
+    ↓
+Git / GitHub
+
+Initial Environment
+    ↓
+Local Development
+
+First Feature
+    ↓
+Expense Tracker
+
+Containerization
+    ↓
+Docker — Later
+
+CI/CD
+    ↓
+GitHub Actions — Later
+
+Cloud
+    ↓
+AWS — Later
+
+Infrastructure as Code
+    ↓
+Terraform — Later
+
+Orchestration
+    ↓
+Kubernetes — Later
+
+Monitoring
+    ↓
+Prometheus + Grafana — Later
+
+Logging
+    ↓
+Centralized Logging — Later
+
+AI
+    ↓
+Later
+```
+
+---
+
+# 26. Current Status
+
+Documentation foundation:
+
+🟢 Almost complete
+
+Remaining:
+
+```text
+DECISIONS.md
+```
+
+After this document is committed, the documentation foundation is complete.
+
+The project will then move into:
+
+```text
+LOCAL DEVELOPMENT ENVIRONMENT
+```
+
+---
+
+# 27. Next Major Milestone
+
+After `DECISIONS.md` is committed:
+
+```text
+PROJECT DOCUMENTATION
+        ↓
+LOCAL DEVELOPMENT SETUP
+        ↓
+Flutter
+        ↓
+FastAPI
+        ↓
+PostgreSQL
+        ↓
+Integration
+        ↓
+Expense Tracker
+```
+
+We will proceed one logical step at a time.
+
+No advanced infrastructure will be introduced yet.
+
+---
+
+# 28. Final Principle
+
+MY LIFE OS should grow through deliberate engineering decisions.
+
+The goal is not to build the most complicated system.
+
+The goal is to build the right system, understand it deeply, and improve it gradually.
+```
+
+### Your one action
+
+Paste it into:
+
+```text
+docs/DECISIONS.md
+```
+
+Commit with:
+
+```text
+docs: add architecture decisions
+```
+
+Then tell me:
+
+**`DECISIONS committed`**
+
+After that, **we will stop documentation and start your actual laptop development setup.**
