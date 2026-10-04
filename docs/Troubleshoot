@@ -1,0 +1,1059 @@
+# PROJECT STATUS
+
+### ✅ Completed
+- `PROJECT_MASTER.md`
+- `ARCHITECTURE.md`
+- `FEATURES.md`
+- `DATABASE.md`
+- `DEVOPS_ROADMAP.md`
+- `DEVELOPMENT_LOG.md`
+
+### 🔄 Current task
+**Create `TROUBLESHOOTING.md`**
+
+### ⬜ Next
+- `DECISIONS.md`
+- Then **local development environment setup**
+- Flutter → FastAPI → PostgreSQL
+- Expense Tracker
+
+---
+
+## STEP 1 — Create `TROUBLESHOOTING.md`
+
+Create:
+
+```text
+docs/TROUBLESHOOTING.md
+```
+
+Paste this:
+
+```markdown
+# MY LIFE OS — Troubleshooting Guide
+
+## 1. Purpose
+
+This document records problems encountered while developing MY LIFE OS and the solutions used to resolve them.
+
+The goal is not only to fix errors, but to understand why they happened.
+
+The troubleshooting process is:
+
+```text
+ERROR
+  ↓
+UNDERSTAND
+  ↓
+IDENTIFY CAUSE
+  ↓
+FIX
+  ↓
+TEST
+  ↓
+DOCUMENT
+```
+
+---
+
+# 2. Troubleshooting Philosophy
+
+When something fails:
+
+1. Read the complete error message.
+2. Identify which component failed.
+3. Understand what the error means.
+4. Find the likely cause.
+5. Apply the smallest reasonable fix.
+6. Test again.
+7. Confirm the result.
+8. Document the solution if it is useful for future reference.
+
+Do not immediately rewrite the entire application.
+
+---
+
+# 3. MY LIFE OS Architecture
+
+The initial application architecture is:
+
+```text
+Flutter
+   ↓
+FastAPI
+   ↓
+PostgreSQL
+```
+
+An error can therefore originate from different layers.
+
+```text
+Flutter Problem
+       ↓
+API Problem
+       ↓
+Database Problem
+```
+
+The first step in troubleshooting is identifying which layer is failing.
+
+---
+
+# 4. Troubleshooting Layers
+
+## Layer 1 — Flutter
+
+Possible problems:
+
+- Application does not start.
+- UI does not load.
+- Button does not work.
+- Form validation fails.
+- API request fails.
+- Incorrect data displayed.
+
+---
+
+## Layer 2 — FastAPI
+
+Possible problems:
+
+- Backend does not start.
+- API endpoint returns an error.
+- Validation fails.
+- Database connection fails.
+- Incorrect response is returned.
+- Python dependency is missing.
+
+---
+
+## Layer 3 — PostgreSQL
+
+Possible problems:
+
+- Database does not start.
+- Connection refused.
+- Authentication failure.
+- Table does not exist.
+- Query fails.
+- Invalid data type.
+- Constraint violation.
+
+---
+
+## Layer 4 — Network
+
+Possible problems:
+
+- Wrong hostname.
+- Wrong port.
+- Connection refused.
+- Firewall blocking traffic.
+- Incorrect API URL.
+- Android emulator/device cannot reach local backend.
+
+---
+
+## Layer 5 — Environment
+
+Possible problems:
+
+- Missing environment variable.
+- Incorrect configuration.
+- Wrong Python version.
+- Wrong Flutter version.
+- Missing package.
+- Incorrect PATH configuration.
+
+---
+
+# 5. First Troubleshooting Question
+
+Before changing code, ask:
+
+```text
+"What exactly is failing?"
+```
+
+Examples:
+
+```text
+Flutter cannot start
+```
+
+is different from:
+
+```text
+Flutter starts but API request fails
+```
+
+which is different from:
+
+```text
+API works but database connection fails
+```
+
+Always identify the failing layer first.
+
+---
+
+# 6. Basic Diagnostic Information
+
+When reporting an error, collect:
+
+```text
+Operating System:
+Tool:
+Version:
+Command Used:
+Expected Result:
+Actual Result:
+Complete Error:
+Recent Change:
+```
+
+Example:
+
+```text
+Operating System:
+Windows
+
+Tool:
+Python
+
+Command:
+python --version
+
+Expected:
+Python version displayed
+
+Actual:
+'python' is not recognized
+
+Recent Change:
+Python was installed
+```
+
+---
+
+# 7. Error Reporting Rule
+
+When asking for help, provide the complete error message whenever possible.
+
+Do not provide only:
+
+```text
+"It is not working."
+```
+
+Better:
+
+```text
+I ran:
+
+python --version
+
+I expected Python version information.
+
+Instead I received:
+
+'python' is not recognized as an internal or external command.
+```
+
+This makes troubleshooting much faster.
+
+---
+
+# 8. Flutter Troubleshooting
+
+## Problem: Flutter command not found
+
+Possible meaning:
+
+Flutter is not installed or the Flutter executable is not available in the system PATH.
+
+Check:
+
+```text
+flutter --version
+```
+
+If the command is not recognized, verify the Flutter installation and PATH configuration.
+
+Do not reinstall everything immediately.
+
+---
+
+## Problem: Flutter application fails to start
+
+First run:
+
+```text
+flutter doctor
+```
+
+Then inspect the reported problems.
+
+Check:
+
+- Flutter installation
+- Dart installation
+- Android tooling
+- Device availability
+- SDK configuration
+
+---
+
+## Problem: Flutter package error
+
+Possible cause:
+
+A required dependency may not be installed.
+
+Useful commands:
+
+```text
+flutter pub get
+```
+
+Then retry the application.
+
+---
+
+# 9. FastAPI Troubleshooting
+
+## Problem: Backend does not start
+
+First verify Python:
+
+```text
+python --version
+```
+
+Then verify the environment and dependencies.
+
+Check:
+
+- Python version
+- Virtual environment
+- FastAPI installation
+- Uvicorn installation
+- Application file path
+
+---
+
+## Problem: API endpoint returns 404
+
+A `404` usually means:
+
+"The requested endpoint was not found."
+
+Check:
+
+- URL
+- HTTP method
+- API route
+- Backend application
+- Port number
+
+Example:
+
+```text
+GET /expenses
+```
+
+must match a route defined by the backend.
+
+---
+
+## Problem: API returns 500
+
+A `500` usually means:
+
+"The backend encountered an unexpected error."
+
+The first place to check is the FastAPI terminal output.
+
+Do not assume the problem is Flutter.
+
+The backend logs usually contain the actual error.
+
+---
+
+# 10. PostgreSQL Troubleshooting
+
+## Problem: Database connection refused
+
+Possible causes:
+
+- PostgreSQL is not running.
+- Wrong host.
+- Wrong port.
+- Incorrect configuration.
+- Firewall issue.
+
+Check PostgreSQL status before changing application code.
+
+---
+
+## Problem: Authentication failure
+
+Possible causes:
+
+- Wrong username.
+- Wrong password.
+- Wrong database.
+- Incorrect environment variables.
+
+Never solve this by putting the password directly into source code.
+
+---
+
+## Problem: Database does not exist
+
+Possible cause:
+
+The PostgreSQL server may be running but the required database has not been created.
+
+Verify:
+
+- PostgreSQL server
+- Database name
+- User
+- Connection configuration
+
+---
+
+## Problem: Table does not exist
+
+Possible cause:
+
+The database schema has not been created or migrations have not been applied.
+
+Check the database structure before changing application code.
+
+---
+
+# 11. HTTP Status Codes
+
+Important API status codes:
+
+```text
+200 OK
+```
+
+Request succeeded.
+
+```text
+201 Created
+```
+
+A new resource was created.
+
+```text
+400 Bad Request
+```
+
+The request is invalid.
+
+```text
+401 Unauthorized
+```
+
+Authentication is required or invalid.
+
+```text
+403 Forbidden
+```
+
+The user is not allowed to perform the action.
+
+```text
+404 Not Found
+```
+
+The requested resource or endpoint was not found.
+
+```text
+422 Unprocessable Entity
+```
+
+The request reached the API but the submitted data failed validation.
+
+```text
+500 Internal Server Error
+```
+
+Unexpected backend failure.
+
+---
+
+# 12. Port Troubleshooting
+
+Each service may use a different port.
+
+Example:
+
+```text
+Flutter/Web
+FastAPI
+PostgreSQL
+```
+
+If two services try to use the same port, one may fail to start.
+
+When troubleshooting a connection problem, verify:
+
+```text
+Host
+Port
+Protocol
+Service status
+```
+
+Do not randomly change ports without understanding the reason.
+
+---
+
+# 13. Environment Variables
+
+Configuration should not be hardcoded.
+
+Example:
+
+```text
+DATABASE_HOST
+DATABASE_PORT
+DATABASE_NAME
+DATABASE_USER
+DATABASE_PASSWORD
+```
+
+If an environment variable is missing:
+
+1. Confirm the variable name.
+2. Confirm it exists.
+3. Confirm the application can read it.
+4. Restart the application if required.
+
+Never commit real secret values to GitHub.
+
+---
+
+# 14. Android → Local Backend
+
+One important future issue:
+
+The Android application may not be able to reach a backend using:
+
+```text
+localhost
+```
+
+when the backend is running on the laptop.
+
+Why?
+
+Because `localhost` from Android means:
+
+```text
+The Android device itself
+```
+
+not:
+
+```text
+The laptop
+```
+
+When mobile testing begins, we will configure the correct local network address or emulator configuration.
+
+Do not solve this before the basic local application is working.
+
+---
+
+# 15. Flutter Web → FastAPI
+
+If Flutter Web cannot communicate with FastAPI, possible causes include:
+
+- Wrong API URL
+- Backend not running
+- Wrong port
+- CORS configuration
+- Network configuration
+
+Check the browser developer tools and FastAPI terminal output.
+
+---
+
+# 16. CORS
+
+CORS is a browser security rule that controls which applications are allowed to communicate with a backend.
+
+Example:
+
+```text
+Flutter Web
+     ↓
+Browser
+     ↓
+FastAPI
+```
+
+If the browser blocks the request because of CORS, the FastAPI configuration may need to allow the correct frontend origin.
+
+Do not allow every origin permanently without understanding the security impact.
+
+---
+
+# 17. Git Troubleshooting
+
+## Problem: Git command not found
+
+Check:
+
+```text
+git --version
+```
+
+If unavailable, verify Git installation and PATH configuration.
+
+---
+
+## Problem: Changes are not showing
+
+Run:
+
+```text
+git status
+```
+
+This shows:
+
+- Modified files
+- New files
+- Untracked files
+
+---
+
+## Problem: Commit failed
+
+Check:
+
+```text
+git status
+```
+
+Then inspect the actual error.
+
+Do not repeatedly run random Git commands.
+
+---
+
+# 18. GitHub Troubleshooting
+
+## Problem: Push rejected
+
+Possible causes:
+
+- Remote branch changed.
+- Authentication problem.
+- Branch mismatch.
+- Repository permissions.
+- Commit history conflict.
+
+First inspect:
+
+```text
+git status
+git branch
+git remote -v
+```
+
+Then determine the specific cause.
+
+---
+
+# 19. Dependency Problems
+
+A dependency is an external package required by the application.
+
+Examples:
+
+```text
+Flutter package
+Python package
+Node/tooling package
+```
+
+If a dependency fails:
+
+1. Identify the package.
+2. Check the error.
+3. Check the installed version.
+4. Check the project dependency file.
+5. Install/update only what is required.
+6. Test again.
+
+Do not upgrade every dependency blindly.
+
+---
+
+# 20. Version Problems
+
+Different technologies have versions.
+
+Examples:
+
+```text
+Flutter version
+Dart version
+Python version
+PostgreSQL version
+Docker version
+```
+
+When troubleshooting a version problem, record the actual versions.
+
+Useful commands may include:
+
+```text
+flutter --version
+python --version
+git --version
+docker --version
+```
+
+The exact commands for each technology will be used when that technology is introduced.
+
+---
+
+# 21. Clean Build Rule
+
+Sometimes generated files or cached dependencies can cause problems.
+
+Before deleting anything, understand why the cleanup is needed.
+
+Example:
+
+```text
+flutter clean
+```
+
+may help with certain Flutter build issues.
+
+Do not repeatedly clean caches as a substitute for understanding the actual error.
+
+---
+
+# 22. Database Data Safety
+
+Before modifying database data:
+
+STOP and verify.
+
+Especially for:
+
+- Financial records
+- Historical expenses
+- Investments
+- Loans
+- Imported spreadsheet data
+
+Never run destructive commands against real historical data without explicit permission.
+
+---
+
+# 23. Historical Data Import Troubleshooting
+
+If an import fails:
+
+```text
+STOP
+```
+
+Do not continue importing blindly.
+
+Check:
+
+1. Original file remains unchanged.
+2. Number of source records.
+3. Number of imported records.
+4. Failed rows.
+5. Duplicate records.
+6. Missing values.
+7. Date formats.
+8. Amount formats.
+9. Category mappings.
+
+Only continue after understanding the problem.
+
+---
+
+# 24. Docker Troubleshooting
+
+Docker will be introduced later.
+
+When Docker is introduced, troubleshoot in this order:
+
+```text
+Docker installed?
+       ↓
+Docker running?
+       ↓
+Image built?
+       ↓
+Container started?
+       ↓
+Port exposed?
+       ↓
+Application running?
+       ↓
+Database reachable?
+```
+
+Do not immediately rebuild everything.
+
+---
+
+# 25. Kubernetes Troubleshooting
+
+Kubernetes will be introduced much later.
+
+Basic troubleshooting will eventually follow:
+
+```text
+Cluster
+   ↓
+Node
+   ↓
+Pod
+   ↓
+Container
+   ↓
+Application
+   ↓
+Service
+   ↓
+Network
+```
+
+Kubernetes troubleshooting will not be needed during the initial development stage.
+
+---
+
+# 26. AWS Troubleshooting
+
+AWS troubleshooting will eventually consider:
+
+```text
+IAM
+ ↓
+Network
+ ↓
+Security Groups
+ ↓
+Compute
+ ↓
+Application
+ ↓
+Database
+ ↓
+Logs
+```
+
+Never expose credentials or secret values while troubleshooting.
+
+---
+
+# 27. Monitoring Troubleshooting
+
+Once monitoring exists:
+
+```text
+Application Problem
+        ↓
+Metrics
+        ↓
+Prometheus
+        ↓
+Grafana
+```
+
+Monitoring should help answer:
+
+- Is the application running?
+- Is it slow?
+- Are errors increasing?
+- Is CPU high?
+- Is memory high?
+- Is the database healthy?
+
+---
+
+# 28. Troubleshooting Checklist
+
+When something fails:
+
+```text
+[ ] What exactly failed?
+[ ] Which layer failed?
+[ ] What changed recently?
+[ ] What does the error message say?
+[ ] Can the problem be reproduced?
+[ ] What is the smallest possible fix?
+[ ] Did the fix work?
+[ ] Was it actually tested?
+[ ] Does the fix create another problem?
+[ ] Should the solution be documented?
+```
+
+---
+
+# 29. Troubleshooting Record
+
+Every important problem should be recorded using:
+
+```text
+## YYYY-MM-DD — Problem Title
+
+### Symptom
+
+What happened?
+
+### Error
+
+Exact error message.
+
+### Cause
+
+Why did it happen?
+
+### Fix
+
+What was changed?
+
+### Verification
+
+How was the fix tested?
+
+### Result
+
+What happened after the fix?
+
+### Lesson
+
+What was learned?
+```
+
+---
+
+# 30. Important Rule
+
+An error is not automatically a failure of the project.
+
+Troubleshooting is part of software engineering and DevOps.
+
+The goal is to learn:
+
+```text
+Problem
+   ↓
+Investigation
+   ↓
+Understanding
+   ↓
+Fix
+   ↓
+Verification
+   ↓
+Knowledge
+```
+
+Every significant troubleshooting experience should improve both the application and the developer's understanding.
+
+---
+
+# 31. Current Status
+
+Troubleshooting documentation:
+
+🟡 Designing
+
+Known project issues:
+
+None yet.
+
+Development environment:
+
+⬜ Not started
+
+Flutter:
+
+⬜ Not started
+
+FastAPI:
+
+⬜ Not started
+
+PostgreSQL:
+
+⬜ Not started
+
+Docker:
+
+⬜ Not started
+
+AWS:
+
+⬜ Not started
+
+Kubernetes:
+
+⬜ Not started
+
+---
+
+# 32. Next Major Milestone
+
+Complete the documentation foundation:
+
+```text
+PROJECT_MASTER.md       🟢
+ARCHITECTURE.md         🟢
+FEATURES.md             🟢
+DATABASE.md             🟢
+DEVOPS_ROADMAP.md       🟢
+DEVELOPMENT_LOG.md      🟢
+TROUBLESHOOTING.md      🟡
+DECISIONS.md            ⬜
+```
+
+After the documentation foundation is complete:
+
+```text
+LOCAL DEVELOPMENT ENVIRONMENT
+```
+
+will begin.
+
+The project will then move from planning into actual implementation.
+```
+
+### Your one action
+
+Paste it into:
+
+```text
+docs/TROUBLESHOOTING.md
+```
+
+Commit with:
+
+```text
+docs: add troubleshooting guide
+```
+
+Then tell me:
+
+**`TROUBLESHOOTING committed`**
